@@ -1,9 +1,10 @@
+import { BASE_URL } from './config/index'
 import BRequest from './request'
-import { BASE_URL, TIME_OUT } from './config'
+import { TIME_OUT } from './config'
 
 const bRequest = new BRequest({
-  baseURL: BASE_URL,
-  timeout: TIME_OUT
+  timeout: TIME_OUT,
+  baseURL: BASE_URL
 })
 
 export default bRequest

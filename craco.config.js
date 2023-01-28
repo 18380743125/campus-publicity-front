@@ -21,4 +21,13 @@ module.exports = {
       '@': resolve('src')
     }
   }
+  // 代理接口
+  // devServer: {
+  //   proxy: {
+  //     '/api': {
+  //       target: 'http://localhost:8000',
+  //       changeOrigin: true
+  //     }
+  //   }
+  // }
 }
