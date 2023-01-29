@@ -28,8 +28,18 @@ export const HeaderWrapper = styled.div`
     }
   }
   .right {
+    display: flex;
     flex: 1;
-    font-size: 16px;
-    padding-left: 200px;
+    font-size: 14px;
+    padding-left: 140px;
+    .user {
+      padding-bottom: 6px;
+      padding-right: 20px;
+    }
+    .btns {
+      margin-left: 20px;
+      position: relative;
+      top: 6px;
+    }
   }
 `

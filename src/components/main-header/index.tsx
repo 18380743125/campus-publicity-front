@@ -1,12 +1,32 @@
 import React, { memo } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import Button from '@mui/material/Button'
 import { HeaderWrapper } from './style'
 import { localCache } from '@/utils/cache'
 
-interface Props {}
+const MainHeader = memo(() => {
+  const navigate = useNavigate()
 
-const MainHeader = memo((props: Props) => {
+  // 退出登录
+  const logout = () => {
+    localCache.clear()
+    navigate('/login')
+  }
+
+  const role = () => {
+    const roles = localCache.getCache('roles')
+    if (!roles) return null
+    const admin = roles.find((item: any) => item.id === 1)
+    if (admin) return '管理员'
+    else return '普通用户'
+  }
+
+  const userInfo = () => {
+    const user = localCache.getCache('user')
+    return user
+  }
+
   return (
     <HeaderWrapper>
       <div className="left">
@@ -20,18 +40,26 @@ const MainHeader = memo((props: Props) => {
         </p>
       </div>
       <div className="right">
-        <p style={{ marginBottom: 10, fontSize: 14 }}>你的身份: {'普通用户'}</p>
-        <p>
+        <div>
+          <p className="user">用户名：{userInfo()?.name ?? '请先登录'}</p>
+          <p style={{ marginBottom: 10, fontSize: 14 }}>你的身份: {role() ?? '游客'}</p>
+        </div>
+        <div className="btns">
           {localCache.getCache('token') ? (
-            <Button variant="contained" size="small" color="secondary">
+            <Button variant="outlined" size="small" color="inherit" onClick={logout}>
               退出登录
             </Button>
           ) : (
-            <Button variant="contained" size="small" color="success">
+            <Button
+              variant="outlined"
+              size="small"
+              color="inherit"
+              onClick={() => navigate('/login')}
+            >
               去登录
             </Button>
           )}
-        </p>
+        </div>
       </div>
     </HeaderWrapper>
   )

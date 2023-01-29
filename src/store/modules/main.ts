@@ -12,14 +12,13 @@ interface AlertConfig {
 }
 
 interface MainState {
-  roleType: Array<Record<string, unknown>>
+  roles: Array<Record<string, unknown>>
   alertConfig: AlertConfig
   user: object
   token: string
 }
 
 const initialState: MainState = {
-  roleType: [],
   alertConfig: {
     open: false,
     anchorOrigin: { vertical: 'top', horizontal: 'center' },
@@ -28,6 +27,7 @@ const initialState: MainState = {
     type: 'error'
   },
   user: localCache.getCache('user') ?? {},
+  roles: localCache.getCache('roles') ?? [],
   token: localCache.getCache('token') ?? ''
 }
 
@@ -37,6 +37,7 @@ export const loginAction = createAsyncThunk('main/login', (payload: any, { dispa
       dispatch(changeOpen({ open: true, message: '登录成功', type: 'success' }))
       localCache.setCache('user', result.data.user)
       localCache.setCache('token', result.data.token)
+      localCache.setCache('roles', result.data.user.roles)
       payload.navigate('/main')
     } else {
       dispatch(changeOpen({ open: true, message: '用户名或密码错误', type: 'error' }))
@@ -51,8 +52,8 @@ const mainSlice = createSlice({
     changeOpen(state, { payload }) {
       state.alertConfig = { ...state.alertConfig, ...payload }
     },
-    changeRoleType(state, { payload }) {
-      state.roleType = payload
+    changeRoles(state, { payload }) {
+      state.roles = payload
     }
   }
 })

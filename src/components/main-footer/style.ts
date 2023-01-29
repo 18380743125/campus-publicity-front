@@ -2,9 +2,8 @@ import styled from 'styled-components'
 export const FooterWrapper = styled.div`
   background-color: #0e2234;
   height: 99px;
+  flex-shrink: 0;
   width: 100%;
-  position: absolute;
-  top: 900px;
   display: flex;
   align-items: center;
   justify-content: center;

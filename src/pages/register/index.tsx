@@ -73,7 +73,7 @@ export default function SignUp() {
       dispatch(changeOpen({ open: true, message: '注册成功', type: 'success' }))
       return navigate('/login')
     }
-    dispatch(changeOpen({ open: true, message: '注册失败', type: 'error' }))
+    dispatch(changeOpen({ open: true, message: '用户名已存在', type: 'error' }))
   }
 
   const goLogin = (e: React.MouseEvent<HTMLElement>) => {

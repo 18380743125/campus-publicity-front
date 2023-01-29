@@ -19,7 +19,7 @@ function App() {
   }
 
   return (
-    <div className="app">
+    <div style={{ height: '100%' }}>
       <Suspense fallback="">{useRoutes(routes)}</Suspense>
       <Snackbar
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
