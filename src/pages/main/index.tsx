@@ -6,6 +6,7 @@ import MainContent from './c-cpns/main-content'
 import { MainWrapper } from './style'
 import MainNav from './c-cpns/main-nav'
 import { useNavigate } from 'react-router-dom'
+import { isAdmin } from '@/utils/isAdmin'
 
 type Props = {}
 
@@ -19,7 +20,7 @@ function Main({}: Props) {
     <MainWrapper>
       <MainHeader />
       <MainNav />
-      <MainBanner />
+      {!isAdmin() ? <MainBanner /> : ''}
       <MainContent />
       <MainFooter />
     </MainWrapper>

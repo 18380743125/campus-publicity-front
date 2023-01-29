@@ -108,7 +108,6 @@ const AddScenery = memo((props: Props) => {
   )
 
   function closeModal() {
-    console.log(51)
     formRef.current.resetFields()
     setTitle('')
     setFileList([])

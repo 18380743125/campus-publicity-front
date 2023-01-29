@@ -3,6 +3,7 @@ import { ConfigProvider, MenuProps } from 'antd'
 import { Menu } from 'antd'
 import { NavWrapper } from './style'
 import { useNavigate } from 'react-router-dom'
+import { isAdmin } from '@/utils/isAdmin'
 
 const MainNav = memo(() => {
   const navigate = useNavigate()
@@ -33,6 +34,11 @@ const MainNav = memo(() => {
       key: '/main/map'
     }
   ]
+
+  if (isAdmin()) {
+    items.splice(4, 0, { label: '用户管理', key: '/main/users' })
+    console.log(items)
+  }
 
   return (
     <NavWrapper>

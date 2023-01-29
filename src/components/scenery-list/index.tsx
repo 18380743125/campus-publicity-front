@@ -88,7 +88,13 @@ const SceneryList = memo((props: Props) => {
           </div>
         ))}
         {totalCount ? (
-          <Pagination onChange={handlePageClick} current={page} total={totalCount} pageSize={3} />
+          <Pagination
+            style={{ marginLeft: 50, marginBottom: 60 }}
+            onChange={handlePageClick}
+            current={page}
+            total={totalCount}
+            pageSize={3}
+          />
         ) : (
           ''
         )}
