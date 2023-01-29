@@ -8,6 +8,7 @@ import Information from '@/pages/main/c-pages/information'
 import Scenery from '@/pages/main/c-pages/scenery'
 import Map from '@/pages/main/c-pages/map'
 import SceneryDetail from '@/pages/main/c-pages/scenery-detail'
+import Users from '@/pages/main/c-pages/users'
 
 const Login = lazy(() => import('@/pages/login'))
 const Register = lazy(() => import('@/pages/register'))
@@ -44,6 +45,10 @@ const routes = [
       {
         path: '/main/map',
         element: <Map />
+      },
+      {
+        path: '/main/users',
+        element: <Users />
       }
     ]
   },

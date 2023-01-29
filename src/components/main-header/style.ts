@@ -31,7 +31,7 @@ export const HeaderWrapper = styled.div`
     display: flex;
     flex: 1;
     font-size: 14px;
-    padding-left: 140px;
+    padding-left: 100px;
     .user {
       padding-bottom: 6px;
       padding-right: 20px;

@@ -2,13 +2,16 @@ import React, { memo } from 'react'
 import { ConfigProvider, MenuProps } from 'antd'
 import { Menu } from 'antd'
 import { NavWrapper } from './style'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { isAdmin } from '@/utils/isAdmin'
+import { localCache } from '@/utils/cache'
 
 const MainNav = memo(() => {
   const navigate = useNavigate()
+  const location = useLocation()
 
   const onClick: MenuProps['onClick'] = (e) => {
+    localCache.setCache('currentUrl', e.key)
     navigate(e.key)
   }
 
@@ -37,7 +40,6 @@ const MainNav = memo(() => {
 
   if (isAdmin()) {
     items.splice(4, 0, { label: '用户管理', key: '/main/users' })
-    console.log(items)
   }
 
   return (
@@ -57,7 +59,7 @@ const MainNav = memo(() => {
             display: 'flex',
             justifyContent: 'center'
           }}
-          defaultSelectedKeys={['/main/home']}
+          defaultSelectedKeys={[location.pathname]}
           onClick={onClick}
           mode="horizontal"
           items={items}

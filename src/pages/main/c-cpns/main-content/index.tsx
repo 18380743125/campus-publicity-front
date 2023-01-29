@@ -1,12 +1,11 @@
-import { isAdmin } from '@/utils/isAdmin'
 import React, { memo } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import { ContentWrapper } from './style'
 
 const MainContent = memo(() => {
-  const admin = isAdmin()
+  const location = useLocation()
   let styles = {}
-  if (admin) {
+  if (location.pathname !== '/main/home') {
     styles = { marginTop: 50 }
   }
   return (

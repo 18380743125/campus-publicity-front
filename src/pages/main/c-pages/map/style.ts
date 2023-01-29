@@ -3,5 +3,6 @@ export const MapWrapper = styled.div`
   margin-bottom: 40px;
   h2 {
     margin: 20px;
+    color: #91ddc6;
   }
 `

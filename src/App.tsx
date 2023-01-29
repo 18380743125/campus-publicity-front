@@ -1,16 +1,22 @@
-import React, { Suspense } from 'react'
-import { useRoutes } from 'react-router-dom'
+import React, { Suspense, useEffect } from 'react'
+import { useNavigate, useRoutes } from 'react-router-dom'
 import routes from './router'
 import { IRootState, useAppDispatch, useAppSelector } from './store'
 
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
 import { changeOpen } from './store/modules/main'
+import { localCache } from './utils/cache'
 
 function App() {
+  const navigate = useNavigate()
   const { alertConfig } = useAppSelector((state: IRootState) => ({
     alertConfig: state.main.alertConfig
   }))
+
+  useEffect(() => {
+    navigate(localCache.getCache('currentUrl'))
+  }, [])
 
   const dispatch = useAppDispatch()
 

@@ -5,13 +5,14 @@ import MainHeader from '@/components/main-header'
 import MainContent from './c-cpns/main-content'
 import { MainWrapper } from './style'
 import MainNav from './c-cpns/main-nav'
-import { useNavigate } from 'react-router-dom'
-import { isAdmin } from '@/utils/isAdmin'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 type Props = {}
 
 function Main({}: Props) {
   const navigate = useNavigate()
+  const location = useLocation()
+
   useEffect(() => {
     navigate('/main/home')
   }, [])
@@ -20,7 +21,7 @@ function Main({}: Props) {
     <MainWrapper>
       <MainHeader />
       <MainNav />
-      {!isAdmin() ? <MainBanner /> : ''}
+      {location.pathname === '/main/home' ? <MainBanner /> : ''}
       <MainContent />
       <MainFooter />
     </MainWrapper>
