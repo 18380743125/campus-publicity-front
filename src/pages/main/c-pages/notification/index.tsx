@@ -1,10 +1,121 @@
-import React, { memo } from 'react'
+import { delNotificationReq, getNotificationReq } from '@/service/modules/notification'
+import { formatUTC } from '@/utils/format'
+import { ConfigProvider, Modal, Pagination } from 'antd'
+import Button from '@mui/material/Button'
+import { memo, useCallback, useEffect, useState } from 'react'
 import { NotificationWrapper } from './style'
+import { useNavigate } from 'react-router-dom'
+import { isAdmin } from '@/utils/isAdmin'
+import { useDispatch } from 'react-redux'
+import { changeOpen } from '@/store/modules/main'
 
-interface Props {}
+const Notification = memo(() => {
+  const [data, setData] = useState([])
+  const [page, setPage] = useState(1)
+  const [totalCount, setTotalCount] = useState(0)
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
-const Notification = memo((props: Props) => {
-  return <NotificationWrapper>notication</NotificationWrapper>
+  // 获取数据
+  const fetchData = useCallback(() => {
+    getNotificationReq(page).then((res) => {
+      setData(res.data.data)
+      setTotalCount(res.data.totalCount)
+    })
+  }, [page])
+
+  // 初始化数据
+  useEffect(() => {
+    fetchData()
+  }, [page])
+
+  // 处理删除
+  const handleDelete = (id: number) => {
+    Modal.warn({
+      title: '你确认要删除吗？',
+      maskClosable: true,
+      onOk() {
+        delNotificationReq(id).then((res: any) => {
+          if (res.code === 0) {
+            dispatch(changeOpen({ open: true, message: '删除成功', type: 'success' }))
+            return fetchData()
+          }
+          dispatch(changeOpen({ open: true, message: '删除失败', type: 'error' }))
+        })
+      }
+    })
+  }
+
+  // 处理编辑点击
+  const goEdit = (item: any) => {
+    navigate('/main/notification/edit', { state: item })
+  }
+
+  const goDetail = (id: number) => {
+    navigate(`/main/notification/${id}`)
+  }
+  return (
+    <NotificationWrapper>
+      <div className="notification">
+        <div className="title">
+          <div className="text">最新通知 (RECENT NOTIFICATION)</div>
+          {isAdmin() ? (
+            <div className="btns">
+              <Button
+                onClick={() => navigate('/main/notification/edit')}
+                variant="contained"
+                size="small"
+                style={{ background: '#3d6079' }}
+              >
+                发布通知
+              </Button>
+            </div>
+          ) : (
+            ''
+          )}
+        </div>
+        <div className="list">
+          {data.map((item: any) => (
+            <div key={item.id} className="item">
+              <div className="text" onClick={() => goDetail(item.id)}>
+                <span>◆</span>
+                {item.title}
+              </div>
+              {isAdmin() ? (
+                <div className="btns">
+                  <Button onClick={() => goEdit(item)} style={{ color: '#013f58' }}>
+                    编辑
+                  </Button>
+                  <Button onClick={() => handleDelete(item.id)} color="error">
+                    删除
+                  </Button>
+                </div>
+              ) : (
+                ''
+              )}
+              <div className="time">{formatUTC(item.createAt, 'YYYY.MM.DD')}</div>
+            </div>
+          ))}
+        </div>
+        <ConfigProvider
+          theme={{
+            token: {
+              colorPrimary: '#3d6079'
+            }
+          }}
+        >
+          <Pagination
+            current={page}
+            onChange={(p) => setPage(p)}
+            style={{ marginTop: 10 }}
+            hideOnSinglePage
+            pageSize={20}
+            total={totalCount}
+          />
+        </ConfigProvider>
+      </div>
+    </NotificationWrapper>
+  )
 })
 
 export default Notification

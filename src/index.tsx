@@ -9,6 +9,7 @@ import theme from './assets/theme'
 import 'normalize.css'
 import '@/assets/css/index.less'
 import '@fontsource/roboto'
+import '@wangeditor/editor/dist/css/style.css'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(

@@ -4,6 +4,8 @@ import { Navigate, RouteObject } from 'react-router-dom'
 import Main from '@/pages/main'
 import Home from '@/pages/main/c-pages/home'
 import Notification from '@/pages/main/c-pages/notification'
+import AddNotification from '@/pages/main/c-pages/notification/c-pages/edit-notification'
+import NotificationDetail from '@/pages/main/c-pages/notification/c-pages/notification-detail'
 import Information from '@/pages/main/c-pages/information'
 import Scenery from '@/pages/main/c-pages/scenery'
 import Map from '@/pages/main/c-pages/map'
@@ -29,6 +31,14 @@ const routes = [
       {
         path: '/main/notification',
         element: <Notification />
+      },
+      {
+        path: '/main/notification/edit',
+        element: <AddNotification />
+      },
+      {
+        path: '/main/notification/:id',
+        element: <NotificationDetail />
       },
       {
         path: '/main/information',
