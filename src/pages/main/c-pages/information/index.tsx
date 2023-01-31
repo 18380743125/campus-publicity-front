@@ -79,15 +79,21 @@ const Information = memo(() => {
                   <Button onClick={() => navigate(`/main/information/${item.id}`)} size="small">
                     查看更多
                   </Button>
-                  <Button
-                    size="small"
-                    onClick={() => navigate('/main/information/edit', { state: item })}
-                  >
-                    编辑
-                  </Button>
-                  <Button onClick={() => handleDelete(item.id)} size="small" color="error">
-                    删除
-                  </Button>
+                  {isAdmin() ? (
+                    <>
+                      <Button
+                        size="small"
+                        onClick={() => navigate('/main/information/edit', { state: item })}
+                      >
+                        编辑
+                      </Button>
+                      <Button onClick={() => handleDelete(item.id)} size="small" color="error">
+                        删除
+                      </Button>
+                    </>
+                  ) : (
+                    ''
+                  )}
                 </div>
               </div>
             </div>

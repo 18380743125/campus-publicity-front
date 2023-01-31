@@ -16,6 +16,7 @@ interface MainState {
   alertConfig: AlertConfig
   user: object
   token: string
+  currentUrl: string
 }
 
 const initialState: MainState = {
@@ -28,7 +29,8 @@ const initialState: MainState = {
   },
   user: localCache.getCache('user') ?? {},
   roles: localCache.getCache('roles') ?? [],
-  token: localCache.getCache('token') ?? ''
+  token: localCache.getCache('token') ?? '',
+  currentUrl: localCache.getCache('currentUrl') ?? '/main/home'
 }
 
 export const loginAction = createAsyncThunk('main/login', (payload: any, { dispatch }) => {
@@ -54,10 +56,13 @@ const mainSlice = createSlice({
     },
     changeRoles(state, { payload }) {
       state.roles = payload
+    },
+    changeCurrentUrl(state, { payload }) {
+      state.currentUrl = payload
     }
   }
 })
 
-export const { changeOpen } = mainSlice.actions
+export const { changeOpen, changeCurrentUrl } = mainSlice.actions
 
 export default mainSlice.reducer
