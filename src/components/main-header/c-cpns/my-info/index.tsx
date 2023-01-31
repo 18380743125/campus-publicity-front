@@ -37,47 +37,59 @@ const MyInfo = memo((props: Props) => {
 
   return (
     <InfoWrapper>
-      <ConfigProvider
-        theme={{
-          token: {
-            colorPrimary: '#3d6079'
-          }
-        }}
-      >
-        <Modal
-          style={{ top: -60, color: '#3d6079' }}
-          title="我的资料"
-          centered
-          cancelText="取消"
-          okText="保存"
-          open={open}
-          onOk={handleSubmit}
-          onCancel={() => setOpen(false)}
-          width={500}
+      {open ? (
+        <ConfigProvider
+          theme={{
+            token: {
+              colorPrimary: '#3d6079'
+            }
+          }}
         >
-          <Form
-            labelCol={{ span: 3 }}
-            wrapperCol={{ span: 14 }}
-            style={{ maxWidth: 600, marginTop: 20 }}
-            autoComplete="off"
-            ref={formRef}
-            initialValues={{ age }}
+          <Modal
+            style={{ top: -60, color: '#3d6079' }}
+            title="我的资料"
+            centered
+            cancelText="取消"
+            okText="保存"
+            open={open}
+            onOk={handleSubmit}
+            onCancel={() => {
+              setAge(user.age)
+              setGender(user.gender)
+              setOpen(false)
+            }}
+            width={500}
           >
-            <Form.Item label="用户名">
-              <Input disabled value={name} />
-            </Form.Item>
-            <Form.Item label="年龄" name="age" rules={[{ required: true, message: '请输入年龄' }]}>
-              <Input onChange={(e) => setAge(e.target.value)} />
-            </Form.Item>
-            <Form.Item label="性别">
-              <Radio.Group value={gender} onChange={(e) => setGender(e.target.value)}>
-                <Radio value="1"> 男 </Radio>
-                <Radio value="0"> 女 </Radio>
-              </Radio.Group>
-            </Form.Item>
-          </Form>
-        </Modal>
-      </ConfigProvider>
+            <Form
+              labelCol={{ span: 3 }}
+              wrapperCol={{ span: 14 }}
+              style={{ maxWidth: 600, marginTop: 20 }}
+              autoComplete="off"
+              ref={formRef}
+              initialValues={{ age }}
+            >
+              <Form.Item label="用户名">
+                <Input disabled value={name} />
+              </Form.Item>
+              <Form.Item
+                label="年龄"
+                name="age"
+                rules={[{ required: true, message: '请输入年龄' }]}
+              >
+                <Input value={age} onChange={(e) => setAge(e.target.value)} />
+              </Form.Item>
+              <Form.Item label="性别">
+                <Radio.Group value={gender} onChange={(e) => setGender(e.target.value)}>
+                  <Radio value="1"> 男 </Radio>
+                  <Radio value="0"> 女 </Radio>
+                </Radio.Group>
+              </Form.Item>
+            </Form>
+          </Modal>
+        </ConfigProvider>
+      ) : (
+        ''
+      )}
     </InfoWrapper>
   )
 })

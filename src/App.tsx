@@ -15,7 +15,7 @@ function App() {
   }))
 
   useEffect(() => {
-    navigate(localCache.getCache('currentUrl'))
+    navigate(localCache.getCache('currentUrl') ?? '/main/home')
   }, [])
 
   const dispatch = useAppDispatch()

@@ -59,7 +59,9 @@ const MainNav = memo(() => {
             display: 'flex',
             justifyContent: 'center'
           }}
-          defaultSelectedKeys={[location.pathname]}
+          selectedKeys={[
+            location.pathname === '/main/home' ? '/main/home' : localCache.getCache('currentUrl')
+          ]}
           onClick={onClick}
           mode="horizontal"
           items={items}

@@ -5,8 +5,10 @@ import Main from '@/pages/main'
 import Home from '@/pages/main/c-pages/home'
 import Notification from '@/pages/main/c-pages/notification'
 import AddNotification from '@/pages/main/c-pages/notification/c-pages/edit-notification'
-import NotificationDetail from '@/pages/main/c-pages/notification/c-pages/notification-detail'
+import NotificationDetail from '@/pages/main/c-pages/notification/c-pages/detail-notification'
 import Information from '@/pages/main/c-pages/information'
+import EditInformation from '@/pages/main/c-pages/information/c-pages/edit-information'
+import DetailInformation from '@/pages/main/c-pages/information/c-pages/detail-information'
 import Scenery from '@/pages/main/c-pages/scenery'
 import Map from '@/pages/main/c-pages/map'
 import SceneryDetail from '@/pages/main/c-pages/scenery-detail'
@@ -43,6 +45,14 @@ const routes = [
       {
         path: '/main/information',
         element: <Information />
+      },
+      {
+        path: '/main/information/edit',
+        element: <EditInformation />
+      },
+      {
+        path: '/main/information/:id',
+        element: <DetailInformation />
       },
       {
         path: '/main/scenery',
