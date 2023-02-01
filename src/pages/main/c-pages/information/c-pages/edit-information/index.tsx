@@ -87,13 +87,6 @@ const EditInformation = memo(() => {
           >
             <Input value={title} onChange={(e) => setTitle(e.target.value)} />
           </Form.Item>
-          <Form.Item
-            label="发布方"
-            name="author"
-            rules={[{ required: true, message: '请选择发布方' }]}
-          >
-            <Input disabled />
-          </Form.Item>
         </Form>
       </ConfigProvider>
       <div className="editor">

@@ -60,10 +60,16 @@ const CommentList = memo(({ comments, fetchData }: Props) => {
           <div className="infor">
             <div className="author">
               {item?.name}
+              {isAdmin(item.roles) && (
+                <span style={{ color: '#1677ff', fontSize: 13, marginLeft: 4 }}>(管理员)</span>
+              )}
               {m === 0 ? '' : <span style={{ fontSize: 13, margin: '0 6px' }}>回复给</span>}
               {item?.parentName}
+              {item?.parentName && isAdmin(item.roles) && (
+                <span style={{ color: '#1677ff', fontSize: 13, marginLeft: 4 }}>(管理员)</span>
+              )}
             </div>
-            <div className="time">{formatUTC(item?.createAt, 'YYYY-MM-DD HH:mm')}</div>
+            <div className="time">{formatUTC(item?.createAt, 'YYYY-MM-DD HH:mm:ss')}</div>
           </div>
           <div className="btn">
             <Button

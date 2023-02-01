@@ -1,6 +1,8 @@
 import { publishCommentReq } from '@/service/modules/comment'
 import { useAppDispatch } from '@/store'
 import { changeOpen } from '@/store/modules/main'
+import { localCache } from '@/utils/cache'
+import { isAdmin } from '@/utils/isAdmin'
 import { ConfigProvider, Form, Modal } from 'antd'
 import TextArea from 'antd/es/input/TextArea'
 import { memo, useState } from 'react'
@@ -20,6 +22,11 @@ const CommentReply = memo(({ open, setOpen, comment, fetchData }: Props) => {
   const handleSubmit = () => {
     if (!content) {
       return dispatch(changeOpen({ type: 'error', open: true, message: '内容不能为空' }))
+    }
+
+    const token = localCache.getCache('token')
+    if (!token) {
+      return dispatch(changeOpen({ type: 'error', open: true, message: '请先登录' }))
     }
 
     publishCommentReq({
@@ -47,7 +54,14 @@ const CommentReply = memo(({ open, setOpen, comment, fetchData }: Props) => {
       >
         <Modal
           style={{ top: -50, color: '#3d6079' }}
-          title={`我回复@${comment.name}`}
+          title={
+            <span>
+              我回复@{comment.name}
+              {isAdmin(comment.roles) && (
+                <span style={{ color: '#1677ff', fontSize: 13, marginLeft: 4 }}>(管理员)</span>
+              )}
+            </span>
+          }
           centered
           cancelText="取消"
           okText="提交"

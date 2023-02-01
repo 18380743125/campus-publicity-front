@@ -15,6 +15,7 @@ const AddNotification = memo(() => {
   const dispatch = useAppDispatch()
   const formRef = useRef<any>()
   const location = useLocation()
+  const [author, setAuthor] = useState(location?.state?.remarks ?? '重庆移通学院教务处')
 
   // 编辑器内容
   const [html, setHtml] = useState(location?.state?.content ?? '')
@@ -42,19 +43,22 @@ const AddNotification = memo(() => {
     if (!editor?.getText()) {
       return dispatch(changeOpen({ open: true, message: '请输入公告内容', type: 'error' }))
     }
-    publishNotificationReq({ flag: location?.state, title, content: editor.getHtml() }).then(
-      (res) => {
-        const info = location?.state ? '编辑' : '发布'
-        if (res.code === 0) {
-          setTitle('')
-          dispatch(changeOpen({ open: true, message: `${info}成功`, type: 'success' }))
-        } else {
-          return dispatch(changeOpen({ open: true, message: `${info}失败`, type: 'error' }))
-        }
-        setHtml('')
-        navigate('/main/notification')
+    publishNotificationReq({
+      flag: location?.state,
+      title,
+      content: editor.getHtml(),
+      remarks: author
+    }).then((res) => {
+      const info = location?.state ? '编辑' : '发布'
+      if (res.code === 0) {
+        setTitle('')
+        dispatch(changeOpen({ open: true, message: `${info}成功`, type: 'success' }))
+      } else {
+        return dispatch(changeOpen({ open: true, message: `${info}失败`, type: 'error' }))
       }
-    )
+      setHtml('')
+      navigate('/main/notification')
+    })
   }
 
   return (
@@ -71,7 +75,7 @@ const AddNotification = memo(() => {
           wrapperCol={{ span: 21 }}
           style={{ maxWidth: 600, marginTop: 20 }}
           autoComplete="off"
-          initialValues={{ author: '重庆移通学院教务处', title }}
+          initialValues={{ author, title }}
           ref={formRef}
         >
           <Form.Item
@@ -84,9 +88,9 @@ const AddNotification = memo(() => {
           <Form.Item
             label="发布方"
             name="author"
-            rules={[{ required: true, message: '请选择发布方' }]}
+            rules={[{ required: true, message: '请输入发布方' }]}
           >
-            <Input disabled />
+            <Input value={author} onChange={(e) => setAuthor(e.target.value)} />
           </Form.Item>
         </Form>
       </ConfigProvider>

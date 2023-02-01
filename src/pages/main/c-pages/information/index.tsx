@@ -74,7 +74,7 @@ const Information = memo(() => {
                 dangerouslySetInnerHTML={{ __html: item?.informationDetail?.content }}
               ></div>
               <div className="author">
-                <div className="left">重庆移通学院教务处</div>
+                {/* <div className="left">重庆移通学院教务处</div> */}
                 <div className="right">
                   <Button onClick={() => navigate(`/main/information/${item.id}`)} size="small">
                     查看更多
