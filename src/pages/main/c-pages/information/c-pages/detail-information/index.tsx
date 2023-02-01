@@ -1,7 +1,8 @@
 import { getInformationByIdReq } from '@/service/modules/information'
 import { formatUTC } from '@/utils/format'
-import React, { memo, useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import Comment from '../../c-cpns/comment'
 import { DetailWrapper } from './style'
 
 const DetailInformation = memo(() => {
@@ -12,7 +13,6 @@ const DetailInformation = memo(() => {
     if (id === undefined) return
     getInformationByIdReq(+id).then((res) => {
       if (res.code === 0) setData(res.data)
-      console.log(res)
     })
   }, [])
 
@@ -29,10 +29,11 @@ const DetailInformation = memo(() => {
         className="content"
         dangerouslySetInnerHTML={{ __html: data?.informationDetail?.content }}
       ></p>
-      <div className="footer">
+      {/* <div className="footer">
         <div className="remarks">重庆移通学院教务处</div>
         <div className="author">{formatUTC(data?.createAt, 'YYYY-MM-DD')}</div>
-      </div>
+      </div> */}
+      {id ? <Comment id={+id} /> : ''}
     </DetailWrapper>
   )
 })

@@ -2,7 +2,6 @@ import styled from 'styled-components'
 export const DetailWrapper = styled.div`
   width: 73%;
   margin: 0 auto 80px;
-  position: relative;
   .title {
     display: flex;
     flex-direction: column;
@@ -23,7 +22,7 @@ export const DetailWrapper = styled.div`
     margin: 20px 0;
     line-height: 1.8;
   }
-  .footer {
+  /* .footer {
     margin: 30px 0;
     position: absolute;
     bottom: -88px;
@@ -35,5 +34,5 @@ export const DetailWrapper = styled.div`
     .remarks {
       margin-bottom: 6px;
     }
-  }
+  } */
 `
