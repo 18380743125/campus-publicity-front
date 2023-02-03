@@ -65,7 +65,7 @@ const CommentList = memo(({ comments, fetchData }: Props) => {
               )}
               {m === 0 ? '' : <span style={{ fontSize: 13, margin: '0 6px' }}>回复给</span>}
               {item?.parentName}
-              {item?.parentName && isAdmin(item.roles) && (
+              {item?.parentName && isAdmin(item.parentRoles) && (
                 <span style={{ color: '#1677ff', fontSize: 13, marginLeft: 4 }}>(管理员)</span>
               )}
             </div>

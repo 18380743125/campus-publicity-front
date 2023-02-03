@@ -17,6 +17,7 @@ const Comment = memo((props: Props) => {
   const fetchData = useCallback(() => {
     getCommentReq({ informationId: id }).then((res) => {
       setComment(res.data)
+
       // setComment(a.data.comments)
     })
   }, [])

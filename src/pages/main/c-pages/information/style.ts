@@ -44,6 +44,11 @@ export const InformationWrapper = styled.div`
           display: flex;
           justify-content: space-between;
           align-items: center;
+          .left {
+            color: #999;
+            font-size: 13px;
+            font-weight: normal;
+          }
         }
         .i-title {
           color: #1976d2;

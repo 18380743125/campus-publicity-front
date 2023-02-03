@@ -7,6 +7,7 @@ import { memo, useState, useCallback, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { InformationWrapper } from './style'
+import { formatUTC } from '../../../../utils/format'
 
 const Information = memo(() => {
   const [data, setData] = useState([])
@@ -75,6 +76,7 @@ const Information = memo(() => {
               ></div>
               <div className="author">
                 {/* <div className="left">重庆移通学院教务处</div> */}
+                <div className="left">{formatUTC(item.createAt, 'YYYY-MM-DD HH:mm')}</div>
                 <div className="right">
                   <Button onClick={() => navigate(`/main/information/${item.id}`)} size="small">
                     查看更多
