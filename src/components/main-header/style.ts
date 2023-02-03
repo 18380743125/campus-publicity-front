@@ -9,7 +9,7 @@ export const HeaderWrapper = styled.div`
   height: 98px;
   .left {
     text-align: right;
-    width: 600px;
+    width: 540px;
   }
   .center {
     width: 400px;

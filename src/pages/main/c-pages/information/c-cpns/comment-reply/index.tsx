@@ -29,6 +29,13 @@ const CommentReply = memo(({ open, setOpen, comment, fetchData }: Props) => {
       return dispatch(changeOpen({ type: 'error', open: true, message: '请先登录' }))
     }
 
+    const user = localCache.getCache('user')
+    if (user.banned) {
+      return dispatch(
+        changeOpen({ type: 'error', open: true, message: '您已被禁止评论, 请联系管理员' })
+      )
+    }
+
     publishCommentReq({
       content,
       parent_id: comment.id,

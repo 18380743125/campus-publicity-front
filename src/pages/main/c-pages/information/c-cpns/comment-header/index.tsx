@@ -25,6 +25,12 @@ const CommentHeader = memo(({ id, fetchData }: Props) => {
       return dispatch(changeOpen({ open: true, message, type: 'error' }))
     }
     if (!token) return dispatch(changeOpen({ open: true, message, type: 'error' }))
+    const user = localCache.getCache('user')
+    if (user.banned) {
+      return dispatch(
+        changeOpen({ type: 'error', open: true, message: '您已被禁止评论, 请联系管理员' })
+      )
+    }
     publishCommentReq({ content, informationId: id }).then((res) => {
       if (res.code === 0) {
         dispatch(changeOpen({ open: true, message: '发表成功', type: 'success' }))
