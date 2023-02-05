@@ -15,12 +15,13 @@ export function publishInformationReq(params: any) {
 }
 
 // 获取通知公告
-export function getInformationReq(page = 1, limit = 10) {
+export function getInformationReq(page = 1, limit = 10, title = '') {
   return bRequest.get({
     url: '/api/v1/information',
     params: {
       page,
-      size: limit
+      size: limit,
+      title
     }
   })
 }

@@ -15,12 +15,13 @@ export function publishNotificationReq(params: any) {
 }
 
 // 获取通知公告
-export function getNotificationReq(page = 1, limit = 20) {
+export function getNotificationReq(page = 1, limit = 20, title = '') {
   return bRequest.get({
     url: '/api/v1/notification',
     params: {
       page,
-      limit
+      limit,
+      title
     }
   })
 }

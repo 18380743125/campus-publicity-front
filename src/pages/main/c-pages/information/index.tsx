@@ -2,27 +2,33 @@ import { delInformationReq, getInformationReq } from '@/service/modules/informat
 import { changeOpen } from '@/store/modules/main'
 import { isAdmin } from '@/utils/isAdmin'
 import { Button } from '@mui/material'
-import { ConfigProvider, Modal, Pagination } from 'antd'
+import { ConfigProvider, Input, Modal, Pagination } from 'antd'
 import { memo, useState, useCallback, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { InformationWrapper } from './style'
 import { formatUTC } from '../../../../utils/format'
+import { SearchOutlined } from '@ant-design/icons'
 
 const Information = memo(() => {
   const [data, setData] = useState([])
   const [page, setPage] = useState(1)
   const [count, setCount] = useState(0)
+  const [title, setTitle] = useState('')
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const fetchData = useCallback(() => {
-    getInformationReq(page, 10).then((res) => {
-      if (res.code === 0) {
-        setCount(res.data.count)
-        setData(res.data.data)
-      }
-    })
-  }, [page])
+
+  const fetchData = useCallback(
+    (title?: string) => {
+      getInformationReq(page, 10, title).then((res) => {
+        if (res.code === 0) {
+          setCount(res.data.count)
+          setData(res.data.data)
+        }
+      })
+    },
+    [page]
+  )
 
   // 初始化数据
   useEffect(() => {
@@ -46,6 +52,12 @@ const Information = memo(() => {
     })
   }
 
+  // 搜索
+  const handleSearch = () => {
+    setPage(1)
+    fetchData(title)
+  }
+
   return (
     <InformationWrapper>
       <div className="information">
@@ -65,6 +77,23 @@ const Information = memo(() => {
           ) : (
             ''
           )}
+          <div style={{ position: 'relative', left: 20 }}>
+            <Input
+              style={{ width: 380 }}
+              value={title}
+              onChange={({ target: { value } }) => setTitle(value)}
+              prefix={<SearchOutlined />}
+              placeholder="请输入资讯标题"
+            />
+            <Button
+              variant="contained"
+              size="small"
+              style={{ position: 'relative', top: -1, left: 10 }}
+              onClick={handleSearch}
+            >
+              检索
+            </Button>
+          </div>
         </div>
         <div className="list">
           {data.map((item: any) => (

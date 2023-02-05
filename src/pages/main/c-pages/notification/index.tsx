@@ -1,6 +1,6 @@
 import { delNotificationReq, getNotificationReq } from '@/service/modules/notification'
 import { formatUTC } from '@/utils/format'
-import { ConfigProvider, Modal, Pagination } from 'antd'
+import { ConfigProvider, Input, Modal, Pagination } from 'antd'
 import Button from '@mui/material/Button'
 import { memo, useCallback, useEffect, useState } from 'react'
 import { NotificationWrapper } from './style'
@@ -8,21 +8,26 @@ import { useNavigate } from 'react-router-dom'
 import { isAdmin } from '@/utils/isAdmin'
 import { useDispatch } from 'react-redux'
 import { changeOpen } from '@/store/modules/main'
+import { SearchOutlined } from '@ant-design/icons'
 
 const Notification = memo(() => {
   const [data, setData] = useState([])
   const [page, setPage] = useState(1)
   const [totalCount, setTotalCount] = useState(0)
+  const [title, setTitle] = useState('')
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
   // 获取数据
-  const fetchData = useCallback(() => {
-    getNotificationReq(page).then((res) => {
-      setData(res.data.data)
-      setTotalCount(res.data.totalCount)
-    })
-  }, [page])
+  const fetchData = useCallback(
+    (title?: string) => {
+      getNotificationReq(page, 20, title).then((res) => {
+        setData(res.data.data)
+        setTotalCount(res.data.totalCount)
+      })
+    },
+    [page]
+  )
 
   // 初始化数据
   useEffect(() => {
@@ -54,6 +59,12 @@ const Notification = memo(() => {
   const goDetail = (id: number) => {
     navigate(`/main/notification/${id}`)
   }
+
+  // 搜索
+  const handleSearch = () => {
+    setPage(1)
+    fetchData(title)
+  }
   return (
     <NotificationWrapper>
       <div className="notification">
@@ -73,6 +84,23 @@ const Notification = memo(() => {
           ) : (
             ''
           )}
+          <div style={{ position: 'relative', left: 20 }}>
+            <Input
+              style={{ width: 380 }}
+              value={title}
+              onChange={({ target: { value } }) => setTitle(value)}
+              prefix={<SearchOutlined />}
+              placeholder="请输入公告标题"
+            />
+            <Button
+              variant="contained"
+              size="small"
+              style={{ position: 'relative', top: -1, left: 10 }}
+              onClick={handleSearch}
+            >
+              检索
+            </Button>
+          </div>
         </div>
         <div className="list">
           {data.map((item: any) => (
